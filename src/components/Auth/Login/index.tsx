@@ -56,33 +56,6 @@ const Login = () => {
       login(userData)
       navigate('/')
     } catch (err) {}
-
-    // try {
-    //   setIsLoading(true)
-    //   const response = await fetch('http://localhost:5000/api/users/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       email: emailInput,
-    //       password: pwdInput,
-    //     }),
-    //   })
-    //   const responseData = await response.json()
-    //   navigate('/')
-    //   if (!response.ok) {
-    //     setIsOpen(true)
-    //     throw new Error(responseData.message)
-    //   }
-
-    //   console.log(responseData)
-    //   setIsLoading(false)
-    // } catch (err: any) {
-    //   console.log(err)
-    //   setError(err.message || 'something went wrong, please try again')
-    //   setIsLoading(false)
-    // }
   }
 
   return (

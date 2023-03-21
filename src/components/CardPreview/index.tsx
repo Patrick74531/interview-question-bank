@@ -29,24 +29,6 @@ const CardPreview: FC<PostsType> = (props) => {
     event.target.onerror = null
     event.target.src = 'no-image.png'
   }
-  // const getInterviewAnswer = async () => {
-  //   console.log('fire')
-  //   try {
-  //     const responseData = await sendRequest(
-  //       'http://localhost:5000/api/openai/interview-question',
-  //       'POST',
-  //       JSON.stringify({
-  //         question: 'what difference between Tailwind and MUI?',
-  //       }),
-  //       {
-  //         'Content-Type': 'application/json',
-  //       }
-  //     )
-  //     console.log(responseData.answer)
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
 
   return (
     <article className='flex max-w-3xl flex-col items-start justify-between w-full'>
