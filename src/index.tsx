@@ -2,18 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './components/App'
-import { PostsProvider } from './context/PostsContext'
 import { UsersProvider } from './context/UserContext'
 import { BrowserRouter } from 'react-router-dom'
+import { QuestionsProvider } from './context/QuestionsContext'
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UsersProvider>
-        <PostsProvider>
+        <QuestionsProvider>
           <App />
-        </PostsProvider>
-      </UsersProvider> 
+        </QuestionsProvider>
+      </UsersProvider>
     </BrowserRouter>
   </React.StrictMode>
 )

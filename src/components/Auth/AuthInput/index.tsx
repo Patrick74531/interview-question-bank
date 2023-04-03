@@ -1,11 +1,6 @@
-import { ChangeEvent, FC } from 'react'
+import { FC } from 'react'
+import { AuthInputType } from '../../../types'
 
-type AuthInputType = {
-  name: string
-  type: string
-  placeholder: string
-  inputHandler: (e: ChangeEvent<HTMLInputElement>) => void
-}
 const AuthInput: FC<AuthInputType> = ({
   name,
   type,

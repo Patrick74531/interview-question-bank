@@ -5,9 +5,13 @@ import { useHttpClient } from '../../hooks/httpHooks'
 import { useUsers } from '../../context/UserContext'
 import Loader from '../Loader'
 import ErrorModal from '../Auth/ErrorModal'
-import { usePosts } from '../../context/PostsContext'
+import { useQuestions } from '../../context/QuestionsContext'
+import {
+  SET_INFO_MODAL_OPEN,
+  SET_RESPONSE,
+} from '../../context/QuestionsContext/anctions/ActionTypes'
 
-function InfoForm({ onClose }: any) {
+const InfoForm = () => {
   const [description, setDescription] = useState('')
   const [date, setDate] = useState(null)
   const [dateStr, setDateStr] = useState('')
@@ -18,13 +22,16 @@ function InfoForm({ onClose }: any) {
   const [city, setCity] = useState('')
   const { isLoading, error, sendRequest, setIsOpen, isOpen }: any =
     useHttpClient()
-  const { setResponse } = usePosts()
+
   const { user } = useUsers()
+  const { dispatch } = useQuestions()
 
   const handleCloseModal = () => {
     setIsOpen(false)
   }
-
+  const handleCloseInfoModal = () => {
+    dispatch({ type: SET_INFO_MODAL_OPEN, payload: false })
+  }
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
@@ -52,11 +59,11 @@ function InfoForm({ onClose }: any) {
           }
         )
 
-        setResponse(responseData)
+        dispatch({ type: SET_RESPONSE, payload: responseData })
+        handleCloseInfoModal()
       } catch (err) {
         alert(err)
       }
-      onClose()
     }
   }
   const handleDate = (e: any) => {
@@ -71,7 +78,11 @@ function InfoForm({ onClose }: any) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='w-64 sm:w-128	mx-auto mt-8'>
+    <form
+      onSubmit={handleSubmit}
+      className='w-64 sm:w-128	mx-auto mt-8'
+      aria-label='Information Form'
+    >
       {isLoading && <Loader />}
       {<ErrorModal isOpen={isOpen} onClose={handleCloseModal} error={error} />}
       <div className='mb-4'>
@@ -88,6 +99,7 @@ function InfoForm({ onClose }: any) {
           className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          aria-label='Description'
         />
       </div>
       <div className='mb-4'>
@@ -101,6 +113,7 @@ function InfoForm({ onClose }: any) {
           selected={date}
           onChange={handleDate}
           className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+          aria-label='Date'
         />
       </div>
       <div className='mb-4'>
@@ -117,6 +130,7 @@ function InfoForm({ onClose }: any) {
           className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           value={industry}
           onChange={(e) => setIndustry(e.target.value)}
+          aria-label='Industry'
         >
           <option value=''>Select an industry</option>
           <option value='IT'>IT</option>
@@ -138,6 +152,7 @@ function InfoForm({ onClose }: any) {
           className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           value={category}
           onChange={(e) => setCategory(e.target.value)}
+          aria-label='Category'
         />
       </div>
       <div className='mb-4'>
@@ -155,6 +170,7 @@ function InfoForm({ onClose }: any) {
           className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           value={companyName}
           onChange={(e) => setCompanyName(e.target.value)}
+          aria-label='Company Name'
         />
       </div>
       <div className='mb-4'>
@@ -169,12 +185,14 @@ function InfoForm({ onClose }: any) {
           className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           value={city}
           onChange={(e) => setCity(e.target.value)}
+          aria-label='City'
         />
       </div>
       <div className='flex justify-end'>
         <button
           type='submit'
           className='bg-btn-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+          aria-label='Submit Form'
         >
           Submit
         </button>

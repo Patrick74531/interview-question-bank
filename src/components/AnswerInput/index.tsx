@@ -1,20 +1,31 @@
-import { FC, useState } from 'react'
+import { FC, useState, ChangeEvent } from 'react'
 import { useUsers } from '../../context/UserContext'
 import { useHttpClient } from '../../hooks/httpHooks'
-import { usePosts } from '../../context/PostsContext'
 import Loader from '../Loader'
 import ErrorModal from '../Auth/ErrorModal'
 import { useNavigate } from 'react-router-dom'
-type InputType = {
-  questionId: string | undefined
-}
+import { InputType } from '../../types'
+import { useQuestions } from '../../context/QuestionsContext'
+import { SET_RESPONSE } from '../../context/QuestionsContext/anctions/ActionTypes'
 
 const AnswerInput: FC<InputType> = ({ questionId }) => {
+  const sendButtonLabel = 'Send answer'
+
   const [message, setMessage] = useState('')
   const { user } = useUsers()
-  const { setResponse } = usePosts()
+  const { dispatch } = useQuestions()
   const { isLoading, error, sendRequest, setIsOpen, isOpen }: any =
     useHttpClient()
+  const [textAreaHeight, setTextAreaHeight] = useState('3rem')
+
+  const resizeTextArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(event.target.value)
+    if (event.target.value === '') {
+      setTextAreaHeight('3rem')
+    } else {
+      setTextAreaHeight(event.target.scrollHeight + 'px')
+    }
+  }
   const navigate = useNavigate()
   const handleSend = async () => {
     if (!user.token) {
@@ -34,7 +45,7 @@ const AnswerInput: FC<InputType> = ({ questionId }) => {
           }
         )
 
-        setResponse(responseData)
+        dispatch({ type: SET_RESPONSE, payload: responseData })
       } catch (err) {
         alert(err)
       }
@@ -50,17 +61,19 @@ const AnswerInput: FC<InputType> = ({ questionId }) => {
     <div className='flex items-center flex-row w-full'>
       {<ErrorModal isOpen={isOpen} onClose={handleCloseModal} error={error} />}
       {isLoading && <Loader />}
-      <div className='flex-1 bg-gray-50 px-4 py-8'>
+      <div className='flex-1 px-4 py-8'>
         <textarea
-          className='w-full h-full resize-none border rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+          className='custom-scrollbar w-full h-full resize-none border rounded-md   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
           placeholder='Type your answer here...'
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={resizeTextArea}
+          style={{ height: textAreaHeight, maxHeight: '8rem' }}
         />
       </div>
       <button
-        className='bg-btn-primary text-white h-10 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+        className='bg-btn-primary  hover:bg-purple-700 text-white h-10 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
         onClick={handleSend}
+        aria-label={sendButtonLabel}
       >
         Send
       </button>

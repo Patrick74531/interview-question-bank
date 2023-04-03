@@ -1,18 +1,5 @@
 import { createContext, useState, useCallback, FC, useContext } from 'react'
-interface UserType {
-  email: string
-  id: string
-  name: string
-  posts: any
-  token: any
-}
-interface IUserContext {
-  isLoggedIn: boolean
-  user: UserType
-  login: (u: UserType, expirationDate?: any) => void
-  logout: () => void
-  expirationDateState: any
-}
+import { IUserContext, UserType } from '../../types'
 
 export const UserContext = createContext<IUserContext>({
   isLoggedIn: false,
@@ -58,7 +45,8 @@ export const UsersProvider: FC<Props> = ({ children }) => {
         name,
         posts,
         email,
-        expiration: tokenExpirationDate.toISOString(), //when transfer to ISO, it can be pass in Date() as a parameter
+        expiration: tokenExpirationDate.toISOString(),
+        //when transfer to ISO, it can be pass in Date() as a parameter
       })
     )
   }, [])

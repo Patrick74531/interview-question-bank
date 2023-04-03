@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         'link-blue': '#1861BF',
         'font-primary': '#45464D',
-        'font-secondary': '#899296',
+        'font-secondary': '#595959',
         'btn-primary': 'indigo',
       },
       width: {
