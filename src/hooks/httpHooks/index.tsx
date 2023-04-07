@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
+import { HttpClientHookReturnType } from '../../types'
 
-export const useHttpClient = () => {
+export const useHttpClient = (): HttpClientHookReturnType => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -8,7 +9,12 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef<AbortController[]>([])
 
   const sendRequest = useCallback(
-    async (url: string, method = 'GET', body = null, headers = {}) => {
+    async (
+      url: string,
+      method: string = 'GET',
+      body: string | null | undefined = undefined,
+      headers: Record<string, string> = {}
+    ) => {
       setIsLoading(true)
       const httpAbortCtrl = new AbortController()
       activeHttpRequests.current.push(httpAbortCtrl)

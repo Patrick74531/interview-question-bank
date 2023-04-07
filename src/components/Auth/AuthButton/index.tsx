@@ -15,6 +15,7 @@ const AuthButton: FC<AuthButtonType> = ({ name }) => {
           <LockClosedIcon
             className='h-5 w-5 text-indigo-500 group-hover:text-indigo-400'
             aria-hidden='true'
+            data-testid='lock-icon'
           />
         </span>
         {name}

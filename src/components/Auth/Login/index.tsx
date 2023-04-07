@@ -1,18 +1,17 @@
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import AuthButton from '../../../components/Auth/AuthButton'
 import AuthInput from '../../../components/Auth/AuthInput'
-import Loader from '../../Loader'
+import Loader from '../../SharedComponents/Loader'
 import ErrorModal from '../ErrorModal'
 import { useNavigate } from 'react-router-dom'
 import { useHttpClient } from '../../../hooks/httpHooks'
 import { useUsers } from '../../../context/UserContext'
 
 const Login = () => {
-  const [emailInput, setEmailInput] = useState()
-  const [pwdInput, setPwdInput] = useState()
+  const [emailInput, setEmailInput] = useState('')
+  const [pwdInput, setPwdInput] = useState('')
 
-  const { isLoading, error, sendRequest, setIsOpen, isOpen }: any =
-    useHttpClient()
+  const { isLoading, error, sendRequest, setIsOpen, isOpen } = useHttpClient()
 
   const { login } = useUsers()
   const navigate = useNavigate()
@@ -21,13 +20,13 @@ const Login = () => {
     setIsOpen(false)
   }
 
-  const emailinputHandler = (e: any) => {
+  const emailinputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailInput(e.target.value)
   }
-  const pwdInputHandler = (e: any) => {
+  const pwdInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setPwdInput(e.target.value)
   }
-  const authSubmitHandler = async (e: any) => {
+  const authSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const responseData = await sendRequest(
@@ -69,7 +68,6 @@ const Login = () => {
           <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
             Sign in to your account
           </h2>
-
         </div>
         <form
           className='mt-8 space-y-6'

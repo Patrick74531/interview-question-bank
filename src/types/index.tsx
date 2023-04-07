@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode } from 'react'
+import { ChangeEvent, ReactNode, MouseEvent, SyntheticEvent } from 'react'
 import { SnackbarOrigin } from '@mui/material/Snackbar'
 import {
   SET_RESPONSE,
@@ -56,21 +56,21 @@ export type UserType = {
   email: string
   id: string
   name: string
-  posts: any
-  token: any
+  posts: PostsType[]
+  token: string | null
 }
 
 export type IUserContext = {
   isLoggedIn: boolean
   user: UserType
-  login: (u: UserType, expirationDate?: any) => void
+  login: (u: UserType, expirationDate?: Date) => void
   logout: () => void
-  expirationDateState: any
+  expirationDateState: Date | null
 }
 
 export type IsSortActiveType = {
   isSortActive: boolean
-  setIsSortActive: any
+  setIsSortActive: (e: boolean) => void
 }
 
 export type SnackbarType = SnackbarOrigin & {
@@ -104,4 +104,85 @@ export type InfoModalType = {
 
 export type CompanyIntroType = {
   companyIntro: string
+}
+export type QuestionBankHeadingType = {
+  scrollToLastViewedQuestion: () => void
+  title: string
+  subtitle: string
+}
+export type PrimaryButtonType = {
+  handleClick?: () => void | Promise<void> | undefined
+  ariaLabel: string
+  title: string
+  type?: 'button' | 'submit' | 'reset' | undefined
+}
+
+export type SvgButtonType = {
+  handleClick: () => void
+  isBookmarked: boolean
+  ariaLabel: string
+}
+
+export type CardPreviewCompanyType = {
+  company: {
+    name: string
+    city: string
+  }
+  handleImageError: (event: SyntheticEvent<HTMLImageElement>) => void
+  handleCompanyIntro: (event: MouseEvent<HTMLElement>) => void
+}
+
+export type HttpClientHookReturnType = {
+  isLoading: boolean
+  error: string | null
+  isOpen: boolean
+  sendRequest: (
+    url: string,
+    method?: string,
+    body?: string | null,
+    headers?: Record<string, string>
+  ) => Promise<any>
+  clearError: () => void
+  setIsOpen: (open: boolean) => void
+}
+
+export type CardPreviewQuestionType = {
+  props: PostsType & {
+    isBookmarked: boolean
+    setBookmarkedId: (id: string | null) => void
+  }
+}
+
+export type ChevronButtonType = {
+  isOpen: boolean
+  handleClick: () => void
+  toggleButtonLabel: string
+}
+
+export type InfoformInputType = {
+  title: string
+  value: string
+  handleChange: (e: string) => void
+}
+
+export type InfoFormSelectType = {
+  value: string
+  title: string
+  optionsData: string[]
+  handleChange: (e: string) => void
+}
+
+export type TextareaType = {
+  placeholder: string
+  minLength: number
+  title: string
+  value: string
+  textAreaHeight?: string
+  handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
+}
+
+export type ErrorModalType = {
+  isOpen: boolean
+  onClose: () => void
+  error: any
 }

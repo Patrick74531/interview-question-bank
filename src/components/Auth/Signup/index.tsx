@@ -1,19 +1,18 @@
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import AuthButton from '../../../components/Auth/AuthButton'
 import AuthInput from '../../../components/Auth/AuthInput'
-import Loader from '../../Loader'
+import Loader from '../../SharedComponents/Loader'
 import ErrorModal from '../ErrorModal'
 import { useNavigate } from 'react-router-dom'
 import { useHttpClient } from '../../../hooks/httpHooks'
 import { useUsers } from '../../../context/UserContext'
 
 const Signup = () => {
-  const [emailInput, setEmailInput] = useState()
-  const [pwdInput, setPwdInput] = useState()
-  const [nameInput, setNameInput] = useState()
+  const [emailInput, setEmailInput] = useState('')
+  const [pwdInput, setPwdInput] = useState('')
+  const [nameInput, setNameInput] = useState('')
 
-  const { isLoading, error, sendRequest, setIsOpen, isOpen }: any =
-    useHttpClient()
+  const { isLoading, error, sendRequest, setIsOpen, isOpen } = useHttpClient()
   const { login } = useUsers()
   const navigate = useNavigate()
 
@@ -21,16 +20,16 @@ const Signup = () => {
     setIsOpen(false)
   }
 
-  const emailinputHandler = (e: any) => {
+  const emailinputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailInput(e.target.value)
   }
-  const pwdInputHandler = (e: any) => {
+  const pwdInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setPwdInput(e.target.value)
   }
-  const nameInputHandler = (e: any) => {
+  const nameInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNameInput(e.target.value)
   }
-  const authSubmitHandler = async (e: any) => {
+  const authSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const responseData = await sendRequest(
@@ -45,16 +44,20 @@ const Signup = () => {
         'Content-Type': 'application/json',
       }
     )
-    const { email, name, token, userId } = responseData
-    const user = {
-      email,
-      name,
-      id: userId,
-      token,
-      posts: [],
+    if (responseData) {
+      const { email, name, token, userId } = responseData
+      const user = {
+        email,
+        name,
+        id: userId,
+        token,
+        posts: [],
+      }
+      login(user)
+      navigate('/')
+    } else {
+      console.error('Error: Response data is undefined.')
     }
-    login(user)
-    navigate('/')
   }
 
   return (

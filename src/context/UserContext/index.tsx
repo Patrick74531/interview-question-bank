@@ -21,16 +21,18 @@ interface Props {
 
 export const UsersProvider: FC<Props> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<UserType>({
     email: '',
     id: '',
     name: '',
     posts: [],
-    token: null,
+    token: '',
   })
-  const [expirationDateState, setExpirationDateState] = useState(null)
+  const [expirationDateState, setExpirationDateState] = useState<Date | null>(
+    null
+  )
 
-  const login = useCallback((u: UserType, expirationDate: any) => {
+  const login = useCallback((u: UserType, expirationDate?: Date) => {
     setIsLoggedIn(true)
     setUser(u)
     const tokenExpirationDate =
