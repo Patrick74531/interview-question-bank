@@ -44,7 +44,7 @@ test('Login component integration test', async () => {
   const signInButton = screen.getByLabelText('Sign in to your account')
 
   userEvent.type(emailInput, 'test@example.com')
-  userEvent.type(passwordInput, 'password')
+  userEvent.type(passwordInput, 'password') 
   userEvent.click(signInButton)
 
   await waitFor(() => {

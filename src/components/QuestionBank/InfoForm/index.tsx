@@ -15,7 +15,15 @@ import InfoFormSelect from './InfoFormSelect'
 import Textarea from '../../SharedComponents/Textarea'
 import 'react-datepicker/dist/react-datepicker.css'
 const InfoForm = () => {
-  const optionsData = ['IT', 'Marketing']
+  const optionsData = [
+    'Accounting',
+    'Administration',
+    'Engineering',
+    'Education',
+    'Government',
+    'IT',
+    'Others',
+  ]
   const [description, setDescription] = useState('')
   const [date, setDate] = useState<Date | null>(null)
   const [dateStr, setDateStr] = useState('')

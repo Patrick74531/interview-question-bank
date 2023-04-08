@@ -15,7 +15,6 @@ const InfoModal: FC<InfoModalType> = ({ isOpen, children, onClose }) => {
       className='fixed inset-0 z-50 flex items-center justify-center'
       role='dialog'
       aria-labelledby='info-modal'
-      data-testid='info-modal'
     >
       <div
         className='fixed inset-0 bg-gray-900 opacity-50'

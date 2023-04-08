@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { AuthButtonType } from '../../../types'
 
 const AuthButton: FC<AuthButtonType> = ({ name }) => {
-  const buttonLabel = `Sign in to your account`
+  const buttonLabel = 'Sign in to your account'
   return (
     <div>
       <button
