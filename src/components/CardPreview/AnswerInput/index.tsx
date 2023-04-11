@@ -55,6 +55,7 @@ const AnswerInput: FC<InputType> = ({ questionId }) => {
         }
 
         setMessage('')
+        setTextAreaHeight('3.5rem')
       }
     }
   }

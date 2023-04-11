@@ -20,6 +20,7 @@ import {
 } from '../../context/QuestionsContext/anctions/ActionTypes'
 import QuestionBankHeading from './QuestionBankHeading'
 import PrimaryButton from '../Button/PrimaryButton'
+import SearchBox from './SearchBox'
 const QuestionBank: FC<IndustryType> = ({ industry }) => {
   const shareMyInterviewQuestionLabel = 'Share my interview question'
 
@@ -95,8 +96,14 @@ const QuestionBank: FC<IndustryType> = ({ industry }) => {
   const handleCloseInfoModal = () =>
     dispatch({ type: SET_INFO_MODAL_OPEN, payload: false })
 
+  const scrollToSearchQuestions = (id: string) => {
+    const element = cardRefs.current[id]
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
   return (
-    <div data-testid='question-bank' className='bg-white py-24 sm:py-32'>
+    <div data-testid='question-bank' className='bg-white'>
       {
         <ErrorModal
           isOpen={isInfoModalOpen}
@@ -105,8 +112,10 @@ const QuestionBank: FC<IndustryType> = ({ industry }) => {
         />
       }
       {isLoading && <Loader />}
+
       <div className='mx-auto max-w-4xl px-6 lg:px-8'>
-        <div className='mx-auto max-w-4xl lg:mx-0 w-full'>
+        <div className=' mx-auto max-w-4xl lg:mx-0 w-full'>
+          <SearchBox scrollToSearchQuestions={scrollToSearchQuestions} />
           <QuestionBankHeading
             title='Interview Question Bank'
             subtitle={`Learn and share interview's question`}
@@ -130,6 +139,7 @@ const QuestionBank: FC<IndustryType> = ({ industry }) => {
             </div>
           </div>
         </div>
+
         <div className='flex flex-col-reverse justify-center items-center gap-10 mx-auto mt-3  max-w-4xl border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16'>
           {postsData &&
             postsData.map(

@@ -186,3 +186,14 @@ export type ErrorModalType = {
   onClose: () => void
   error: any
 }
+
+export type SearchResultsType = {
+  name: string
+  description: string
+  id: string
+  scrollToSearchQuestions: (id: string) => void
+}
+
+export type SearchBoxType = {
+  scrollToSearchQuestions: (id: string) => void
+}

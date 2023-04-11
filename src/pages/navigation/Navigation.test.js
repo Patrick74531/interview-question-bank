@@ -32,13 +32,13 @@ describe('Navigation component', () => {
 
   test('renders navigation links', () => {
     renderNavigation()
-    const questionBankLink = screen.getByText(/QuestionBank/i)
+    const questionBankLink = screen.getByText(/All/i)
     const itLink = screen.getByText(/IT/i)
-    const marketingLink = screen.getByText(/Marketing/i)
+    const accountingLink = screen.getByText(/accounting/i)
 
     expect(questionBankLink).toBeInTheDocument()
     expect(itLink).toBeInTheDocument()
-    expect(marketingLink).toBeInTheDocument()
+    expect(accountingLink).toBeInTheDocument()
   })
 
   test('renders user menu with Sign in when user is not logged in', () => {
